@@ -18,13 +18,13 @@ const TORCIDAS = [
 “Bamor”, “Cearamor”, “Furia Bicolor”, “Galoucura”,
 “Camisa 12”, “Gavioes da Fiel”, “Geral do Gremio”,
 “Independente”, “Jovem do Sport”, “Mafia Azul”,
-“Terror Bicolor”, “Força Jovem Goias”, “Jovem Fla”,
-“Força Jovem”, “Mancha Verde”, “Torcida Jovem”,
-“Pavilhão 9”, “Guarda Popular”, “Império Alviverde”,
-“Inferno Coral”, “Mancha Azul CSA”, “Fúria Jovem Botafogo”,
-“Leões da TUF”, “Fanáticos”, “Remoçada”,
-“Mancha Azul AVAI”, “Comando Alvi-Rubro”, “Raça Rubro”,
-“Imbatíveis”, “Mafia Vermelha”, “Esquadrão Vila Novaense”,
+“Terror Bicolor”, “Forca Jovem Goias”, “Jovem Fla”,
+“Forca Jovem”, “Mancha Verde”, “Torcida Jovem”,
+“Pavilhao 9”, “Guarda Popular”, “Imperio Alviverde”,
+“Inferno Coral”, “Mancha Azul CSA”, “Furia Jovem Botafogo”,
+“Leoes da TUF”, “Fanaticos”, “Remocada”,
+“Mancha Azul AVAI”, “Comando Alvi-Rubro”, “Raca Rubro”,
+“Imbativeis”, “Mafia Vermelha”, “Esquadrao Vila Novaense”,
 “Garra Alvinegra”, “Young Flu”, “Gang da Ilha”,
 ];
 
@@ -38,7 +38,7 @@ GatewayIntentBits.MessageContent,
 });
 
 client.once(“ready”, () => {
-console.log(`✊ Bot IDT online como ${client.user.tag}`);
+console.log(“Bot IDT online como “ + client.user.tag);
 });
 
 client.on(“messageCreate”, async (message) => {
@@ -53,8 +53,8 @@ return message.reply({
 embeds: [
 new EmbedBuilder()
 .setColor(0xff0000)
-.setTitle(“❌ Token inválido”)
-.setDescription(“Use: `!verificar SEU_TOKEN`\n\nO token aparece na tela do jogo quando você entra pela primeira vez.”),
+.setTitle(“Token invalido”)
+.setDescription(“Use: !verificar SEU_TOKEN - O token aparece na tela do jogo quando voce entra pela primeira vez.”),
 ],
 });
 }
@@ -64,8 +64,8 @@ return message.reply({
 embeds: [
 new EmbedBuilder()
 .setColor(0xff0000)
-.setTitle(“❌ Token não encontrado”)
-.setDescription(“Token inválido ou expirado. Abra o jogo novamente para gerar um novo token.”),
+.setTitle(“Token nao encontrado”)
+.setDescription(“Token invalido ou expirado. Abra o jogo novamente para gerar um novo token.”),
 ],
 });
 }
@@ -78,7 +78,7 @@ return message.reply({
 embeds: [
 new EmbedBuilder()
 .setColor(0xff0000)
-.setTitle(“⏰ Token expirado”)
+.setTitle(“Token expirado”)
 .setDescription(“Seu token expirou. Abra o jogo novamente para gerar um novo.”),
 ],
 });
@@ -86,8 +86,8 @@ new EmbedBuilder()
 
 const row = new ActionRowBuilder().addComponents(
 new ButtonBuilder()
-.setCustomId(`form_${token}`)
-.setLabel(“📋 Preencher Formulário”)
+.setCustomId(“form_” + token)
+.setLabel(“Preencher Formulario”)
 .setStyle(ButtonStyle.Primary)
 );
 
@@ -95,9 +95,9 @@ await message.reply({
 embeds: [
 new EmbedBuilder()
 .setColor(0xffffff)
-.setTitle(“✅ Token válido!”)
-.setDescription(`Olá <@${message.author.id}>!\n\nSeu token foi reconhecido. Clique no botão abaixo para preencher seu formulário e criar seu personagem no **Império das Torcidas**.`)
-.setFooter({ text: “Império das Torcidas • IDT” }),
+.setTitle(“Token valido!”)
+.setDescription(“Ola <@” + message.author.id + “>! Seu token foi reconhecido. Clique no botao abaixo para preencher seu formulario e criar seu personagem no Imperio das Torcidas.”)
+.setFooter({ text: “Imperio das Torcidas - IDT” }),
 ],
 components: [row],
 });
@@ -107,23 +107,23 @@ client.on(“interactionCreate”, async (interaction) => {
 if (interaction.isButton() && interaction.customId.startsWith(“form_”)) {
 const token = interaction.customId.replace(“form_”, “”);
 
-```
+
 if (!tokensPendentes.has(token)) {
   return interaction.reply({
-    content: "❌ Token expirado. Abra o jogo novamente.",
+    content: "Token expirado. Abra o jogo novamente.",
     ephemeral: true,
   });
 }
 
 const modal = new ModalBuilder()
-  .setCustomId(`submit_${token}`)
+  .setCustomId("submit_" + token)
   .setTitle("Criar Personagem - IDT");
 
 const nomeInput = new TextInputBuilder()
   .setCustomId("nome")
   .setLabel("Nome")
   .setStyle(TextInputStyle.Short)
-  .setPlaceholder("Ex: João")
+  .setPlaceholder("Ex: Joao")
   .setMinLength(2)
   .setMaxLength(20)
   .setRequired(true);
@@ -141,7 +141,7 @@ const apelidoInput = new TextInputBuilder()
   .setCustomId("apelido")
   .setLabel("Apelido")
   .setStyle(TextInputStyle.Short)
-  .setPlaceholder("Ex: Xerifão")
+  .setPlaceholder("Ex: Xerifao")
   .setMinLength(2)
   .setMaxLength(20)
   .setRequired(true);
@@ -163,17 +163,17 @@ modal.addComponents(
 );
 
 await interaction.showModal(modal);
-```
+
 
 }
 
 if (interaction.isModalSubmit() && interaction.customId.startsWith(“submit_”)) {
 const token = interaction.customId.replace(“submit_”, “”);
 
-```
+
 if (!tokensPendentes.has(token)) {
   return interaction.reply({
-    content: "❌ Token expirado. Abra o jogo novamente.",
+    content: "Token expirado. Abra o jogo novamente.",
     ephemeral: true,
   });
 }
@@ -192,8 +192,8 @@ if (!torcidaValida) {
     embeds: [
       new EmbedBuilder()
         .setColor(0xff0000)
-        .setTitle("❌ Torcida inválida")
-        .setDescription(`A torcida **${torcida}** não existe no IDT.\n\n**Torcidas disponíveis:**\n${TORCIDAS.join(", ")}`),
+        .setTitle("Torcida invalida")
+        .setDescription("A torcida " + torcida + " nao existe no IDT. Torcidas disponiveis: " + TORCIDAS.join(", ")),
     ],
     ephemeral: true,
   });
@@ -219,7 +219,7 @@ if (CONFIG.CARGO_VERIFICADO_ID) {
     const membro = await interaction.guild.members.fetch(interaction.user.id);
     await membro.roles.add(CONFIG.CARGO_VERIFICADO_ID);
   } catch (e) {
-    console.log("Erro ao dar cargo:", e.message);
+    console.log("Erro ao dar cargo: " + e.message);
   }
 }
 
@@ -227,21 +227,21 @@ await interaction.reply({
   embeds: [
     new EmbedBuilder()
       .setColor(0x00ff00)
-      .setTitle("✊ Bem-vindo ao Império!")
+      .setTitle("Bem-vindo ao Imperio!")
       .setDescription(
-        `Personagem criado com sucesso!\n\n` +
-        `**Nome:** ${nome} ${sobrenome}\n` +
-        `**Apelido:** ${apelido}\n` +
-        `**Torcida:** ${torcidaValida}\n\n` +
-        `Agora volte ao jogo e sua tela será liberada automaticamente!`
+        "Personagem criado com sucesso!\n\n" +
+        "Nome: " + nome + " " + sobrenome + "\n" +
+        "Apelido: " + apelido + "\n" +
+        "Torcida: " + torcidaValida + "\n\n" +
+        "Agora volte ao jogo e sua tela sera liberada automaticamente!"
       )
-      .setFooter({ text: "Império das Torcidas • IDT" }),
+      .setFooter({ text: "Imperio das Torcidas - IDT" }),
   ],
   ephemeral: true,
 });
 
-console.log(`✅ Jogador verificado: ${nome} ${sobrenome} (${torcidaValida}) - Roblox ID: ${dadosToken.robloxId}`);
-```
+console.log("Jogador verificado: " + nome + " " + sobrenome + " (" + torcidaValida + ") - Roblox ID: " + dadosToken.robloxId);
+
 
 }
 });
@@ -253,13 +253,13 @@ return res.status(403).json({ error: “Acesso negado” });
 }
 const { token, robloxId } = req.body;
 if (!token || !robloxId) {
-return res.status(400).json({ error: “Dados inválidos” });
+return res.status(400).json({ error: “Dados invalidos” });
 }
 tokensPendentes.set(token, {
 robloxId: String(robloxId),
 timestamp: Date.now(),
 });
-console.log(`🎮 Token registrado: ${token} para RobloxID: ${robloxId}`);
+console.log(“Token registrado: “ + token + “ para RobloxID: “ + robloxId);
 res.json({ success: true });
 });
 
@@ -280,14 +280,14 @@ res.json({ verificado: false });
 app.get(”/”, (req, res) => {
 res.json({
 status: “online”,
-bot: “Império das Torcidas”,
+bot: “Imperio das Torcidas”,
 jogadoresVerificados: jogadoresVerificados.size,
 tokensPendentes: tokensPendentes.size,
 });
 });
 
 app.listen(CONFIG.PORT, () => {
-console.log(`🌐 Servidor HTTP rodando na porta ${CONFIG.PORT}`);
+console.log(“Servidor HTTP rodando na porta “ + CONFIG.PORT);
 });
 
 client.login(CONFIG.TOKEN);
